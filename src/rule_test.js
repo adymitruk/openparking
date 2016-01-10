@@ -4,7 +4,7 @@ var Money = require('./money.js');
 var SetRateRule = require('./events/SetRateRule.js');
 var Park = require('./commands/Park.js')
 
-var vancouverRule = new SetRateRule( {
+var vancouverRateRule = new SetRateRule( {
     SetRateRule: {
         lotRange: "1000-2000",
         rates: [
@@ -35,7 +35,9 @@ module.exports = {
         var rule = new Rule();
 
         // GIVEN: a parking spot is setup
-        rule.hydrate(vancouverRule.SetRateRule);
+        console.log('vancouver rule: ');
+        console.log(vancouverRateRule);
+        rule.hydrate(vancouverRateRule);
 
         // WHEN: a user asks to park
         var parkingChargeApprovedEvent = rule.execute( {
@@ -57,30 +59,4 @@ module.exports = {
             "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);
         test.done();
     },
-    'Test Parking During Rush Hour' : function(test) {
-        var rule = new Rule();
-
-        // GIVEN: a parking spot is setup
-        rule.hydrate(vancouverRule.SetRateRule);
-
-        // WHEN: a user asks to park
-        var parkingChargeApprovedEvent = rule.execute( {
-            ParkCommand: {
-                version: "1.0.0",
-                previousParking: null,
-                spot: 1234,
-                start: "Jan 7, 2016 1430h",
-                durationInMinutes: 60
-            }
-        });
-
-        // THEN: an error message is received
-        var expectedMoneyRoundedToPennies = new Money(40.0/60.0*2.0);
-        console.log("money test " + expectedMoneyRoundedToPennies);
-        var actual = parkingChargeApprovedEvent.totalCharge;
-        test.expect(1);
-        test.ok(actual === expectedMoneyRoundedToPennies,
-            "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);
-        test.done();
-    }
 }

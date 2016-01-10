@@ -6,15 +6,13 @@ function Rule() {
 }
 
 Rule.prototype.execute = function(command) {
-    console.log(command);
     var parkCommand = command.ParkCommand;
     var rule = _ruleFor(this.rules, parkCommand.spot);
-    console.log("rule " + rule);
-    function _rateFor(rates, start, duration) {
-        r
+    function _totalForParking(rates, start, duration) {
+        for (var rate )
     }
 
-    var currentRate = _rateFor(rule.rates, command.startTime, command.duration);
+    var currentRate = _totalForParking(rule.rates, command.startTime, command.duration);
     var money = new Money(command.duration/60
         *currentRate.ratePerHour);
     return { approvedEvent: {
@@ -25,12 +23,14 @@ Rule.prototype.execute = function(command) {
 };
 
 Rule.prototype.hydrate = function (event) {
+    console.log('event being pushed:');
+    console.log(event);
+    console.log('event type:'); // best way I know of getting the type
+    console.log(event.constructor.name);
     this.rules.push(event);
 };
 
 function _ruleFor(rules, spot) {
-    console.log("rules: ");
-    console.log(rules);
     var resultRule = null;
 
     /**
@@ -38,30 +38,22 @@ function _ruleFor(rules, spot) {
      */
     function IfInRange(lotRange, spot) {
         var startEnd = lotRange.split('-');
-        console.log(startEnd);
         var start = startEnd[0];
-        console.log(start);
         var end = startEnd[1];
-        console.log(end);
-        console.log(spot);
         return spot >= Number(start) && spot <= Number(end);
     }
 
+    console.log(rules);
     for (var rule in rules) {
         if (!rules.hasOwnProperty(rule)) continue;
-        console.log("looking at rule:");
         var currentRule = rules[rule];
-        console.log(currentRule);
         var lotRange = currentRule.lotRange;
-        console.log(lotRange);
         if (IfInRange(lotRange,spot)) {
             resultRule = rules[rule];
             break;
         }
     }
-    console.log("found rule: ");
-    console.log(resultRule);
     return resultRule;
-};
+}
 
 module.exports = Rule;
