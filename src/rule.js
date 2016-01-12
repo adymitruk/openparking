@@ -7,14 +7,10 @@ function Rule() {
 
 Rule.prototype.execute = function(command) {
     var parkCommand = command.ParkCommand;
-    var rule = _ruleFor(this.rules, parkCommand.spot);
-    function _totalForParking(rates, start, duration) {
-        for (var rate )
-    }
-
-    var currentRate = _totalForParking(rule.rates, command.startTime, command.duration);
-    var money = new Money(command.duration/60
-        *currentRate.ratePerHour);
+    var rule = _ruleForSpot(this.rules, parkCommand.spot);
+    var currentRate = _applicableRate(rule.rates, parkCommand.startTime, parkCommand.duration);
+    console.log('current rate: ' + currentRate);
+    var money = new Money(parkCommand.duration / 60 * currentRate).;
     return { approvedEvent: {
         version: "1.0.0",
         totalCharge: money
@@ -30,7 +26,7 @@ Rule.prototype.hydrate = function (event) {
     this.rules.push(event);
 };
 
-function _ruleFor(rules, spot) {
+function _ruleForSpot(rules, spot) {
     var resultRule = null;
 
     /**
@@ -40,7 +36,10 @@ function _ruleFor(rules, spot) {
         var startEnd = lotRange.split('-');
         var start = startEnd[0];
         var end = startEnd[1];
-        return spot >= Number(start) && spot <= Number(end);
+        console.log('lot range: %s start: %s end: %s spot: %s', lotRange, start, end, spot);
+        var isInRange = spot >= Number(start) && spot <= Number(end);
+        console.log(isInRange ? 'is in range' : 'is not in range');
+        return isInRange;
     }
 
     console.log(rules);
@@ -50,10 +49,42 @@ function _ruleFor(rules, spot) {
         var lotRange = currentRule.lotRange;
         if (IfInRange(lotRange,spot)) {
             resultRule = rules[rule];
+            console.log('found rule for lot range: ' + resultRule.lotRange);
             break;
         }
     }
     return resultRule;
+}
+function _applicableRate(rates, start, duration) {
+    function _rateInRange(timeRange) {
+        console.log('searching for valid range in ' + timeRange);
+        var regex = /^([A-Z][a-z]{2})-([A-Z][a-z]{2}), ([0-9]{4})h-([0-9]{4})h$/;
+        var result = timeRange.match(regex);
+        var startDay = result[1];
+        var endDay = result[2];
+        var startHour = result[3];
+        var endHour = result[4];
+        console.log('matched start day: %s end day: %s start hour: %d end hour %d',
+            startDay, endDay, startHour, endHour);
+        var parkingDate = new Date(start);
+        console.log('start of parking session: ' + parkingDate);
+        var startTime = parkingDate.getHours()*100 + parkingDate.getMinutes();
+        console.log('hours and minutes start time: ' + startTime);
+        console.log('range bottom: ' + startHour);
+        console.log('range top: ' + endHour);
+        var bottomOfRange = startTime >= Number(startHour);
+        console.log('is above or equal to bottom of range: ' + bottomOfRange);
+        var topOfRange = startTime <= Number(endHour);
+        console.log('is below or equal to top of range: ' + topOfRange);
+        return bottomOfRange && topOfRange;
+    }
+    for (var rate in rates) {
+        var currentRate = rates[rate];
+        if (_rateInRange(currentRate.timeRange)) {
+            console.log('rate ' + currentRate.ratePerHour);
+            return currentRate.ratePerHour;
+        }
+    }
 }
 
 module.exports = Rule;

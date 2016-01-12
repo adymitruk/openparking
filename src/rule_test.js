@@ -45,10 +45,12 @@ module.exports = {
                 version: "1.0.0",
                 previousParking: null,
                 spot: 1234,
-                startTime: "Jan 7, 2016 2210h",
+                startTime: "Jan 7 2016 18:10:00 PST",
                 durationInMinutes: 40
             }
         });
+        console.log('event received back');
+        console.log(parkingChargeApprovedEvent);
 
         // THEN: the appropriate charge is calculated
         var expectedMoneyRoundedToPennies = new Money(40.0/60.0*2.0);
