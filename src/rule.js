@@ -10,7 +10,7 @@ Rule.prototype.execute = function(command) {
     var rule = _ruleForSpot(this.rules, parkCommand.spot);
     var currentRate = _applicableRate(rule.rates, parkCommand.startTime, parkCommand.duration);
     console.log('current rate: ' + currentRate);
-    var money = new Money(parkCommand.duration / 60 * currentRate).;
+    var money = new Money(parkCommand.duration / 60 * currentRate);
     return { approvedEvent: {
         version: "1.0.0",
         totalCharge: money
