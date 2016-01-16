@@ -59,9 +59,10 @@ module.exports = {
         console.log(parkingChargeApprovedEvent);
 
         // THEN: the appropriate charge is calculated
-        var expectedMoneyRoundedToPennies = new Money(40.0/60.0*2.0);
+        var expectedMoneyRoundedToPennies = (40.0/60.0*2.0).toFixed(2);
         console.log("money test " + expectedMoneyRoundedToPennies);
         var actual = parkingChargeApprovedEvent.totalCharge;
+        console.log('actual: ' + actual);
         test.expect(1);
         test.ok(actual === expectedMoneyRoundedToPennies,
             "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);

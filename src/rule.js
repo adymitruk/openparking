@@ -1,5 +1,5 @@
 "use strict";
-var Money = require('./money.js');
+var ApprovedForCharge = require('./events/ApprovedForCharge');
 
 function Rule() {
     this.rules = [];
@@ -7,15 +7,18 @@ function Rule() {
 
 Rule.prototype.execute = function(command) {
     var parkCommand = command.ParkCommand;
+    console.log('Command:');
+    console.log(parkCommand);
     var rule = _ruleForSpot(this.rules, parkCommand.spot);
     var currentRate = _applicableRate(rule.rates, parkCommand.startTime, parkCommand.duration);
     console.log('current rate: ' + currentRate);
-    var money = new Money(parkCommand.duration / 60 * currentRate);
-    return { approvedEvent: {
+    var amountToCharge = parkCommand.durationInMinutes / 60 * currentRate;
+    console.log("amount to charge: " + amountToCharge.toFixed(2));
+    return new ApprovedForCharge({
         version: "1.0.0",
-        totalCharge: money
-        }
-    }
+        totalCharge: amountToCharge.toFixed(2)
+
+    });
 };
 
 Rule.prototype.hydrate = function (event) {
