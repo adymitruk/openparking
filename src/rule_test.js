@@ -66,5 +66,5 @@ module.exports = {
         test.ok(actual === expectedMoneyRoundedToPennies,
             "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);
         test.done();
-    },
+    }
 }
