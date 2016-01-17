@@ -5,7 +5,7 @@ var Rule = require('../src/rule.js');
 var SetRateRule = require('../src/events/SetRateRule.js');
 var Park = require('../src/commands/Park.js');
 
-var vancouverRateRule = new SetRateRule( {
+var vancouverRateRule = new SetRateRule({
     SetRateRule: {
         lotRange: "1000-2000",
         rates: [
@@ -30,16 +30,16 @@ var vancouverRateRule = new SetRateRule( {
         ]
     }
 });
-
 module.exports = {
-    'Test Parking Sunny Path' : function(test) {
+    'Test Parking Sunny Path': function (test) {
+        test.expect(1);
         var rule = new Rule();
 
         // GIVEN: a parking spot is setup
         rule.hydrate(vancouverRateRule);
 
         // WHEN: a user asks to park
-        var parkingChargeApprovedEvent = rule.execute( {
+        var parkingChargeApprovedEvent = rule.execute({
             ParkCommand: {
                 version: "1.0.0",
                 previousParking: null,
@@ -50,9 +50,8 @@ module.exports = {
         });
 
         // THEN: the appropriate charge is calculated
-        var expectedMoneyRoundedToPennies = (40.0/60.0*2.0).toFixed(2);
+        var expectedMoneyRoundedToPennies = (40.0 / 60.0 * 2.0).toFixed(2);
         var actual = parkingChargeApprovedEvent.totalCharge;
-        test.expect(1);
         test.ok(actual === expectedMoneyRoundedToPennies,
             "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);
         test.done();
@@ -79,4 +78,4 @@ module.exports = {
         test.ok(parkingChargeRejectedEvent.Reason === "Afternoon Rush Hour", "rejected reason was supposed to be 'Afternoon Rush Hour'");
         test.done();
     }
-};
+}
