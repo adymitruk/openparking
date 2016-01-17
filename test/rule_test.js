@@ -55,4 +55,4 @@ module.exports = {
             "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);
         test.done();
     }
-}
+};
