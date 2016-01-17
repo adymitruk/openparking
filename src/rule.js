@@ -1,4 +1,6 @@
+/*jslint node: true */
 "use strict";
+
 var ApprovedForCharge = require('./events/ApprovedForCharge');
 
 function Rule() {
@@ -35,12 +37,16 @@ function _ruleForSpot(rules, spot) {
     }
 
     for (var rule in rules) {
-        if (!rules.hasOwnProperty(rule)) continue;
-        var currentRule = rules[rule];
-        var lotRange = currentRule.lotRange;
-        if (IfInRange(lotRange,spot)) {
-            resultRule = rules[rule];
-            break;
+        if (rules.hasOwnProperty(rule)) {
+            if (!rules.hasOwnProperty(rule)) {
+                continue;
+            }
+            var currentRule = rules[rule];
+            var lotRange = currentRule.lotRange;
+            if (IfInRange(lotRange, spot)) {
+                resultRule = rules[rule];
+                break;
+            }
         }
     }
     return resultRule;
@@ -60,9 +66,11 @@ function _applicableRate(rates, start, duration) {
         return bottomOfRange && topOfRange;
     }
     for (var rate in rates) {
-        var currentRate = rates[rate];
-        if (_rateInRange(currentRate.timeRange)) {
-            return currentRate.ratePerHour;
+        if (rates.hasOwnProperty(rate)) {
+            var currentRate = rates[rate];
+            if (_rateInRange(currentRate.timeRange)) {
+                return currentRate.ratePerHour;
+            }
         }
     }
 }

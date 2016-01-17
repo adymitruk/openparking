@@ -1,7 +1,9 @@
+/*jslint node:true */
 "use strict";
+
 var Rule = require('../src/rule.js');
 var SetRateRule = require('../src/events/SetRateRule.js');
-var Park = require('../src/commands/Park.js')
+var Park = require('../src/commands/Park.js');
 
 var vancouverRateRule = new SetRateRule( {
     SetRateRule: {

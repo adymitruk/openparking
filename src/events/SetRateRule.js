@@ -1,4 +1,6 @@
+/*jslint node:true */
 "use strict";
+
 var uuid = require('uuid');
 
 function SetRateRule(objectGraph) {
@@ -6,9 +8,12 @@ function SetRateRule(objectGraph) {
     this.id = uuid.v4();
     this.lotRange = objectGraph.SetRateRule.lotRange;
     this.rates = [];
-    for (var rate in objectGraph.SetRateRule.rates) {
-        var currentRate = objectGraph.SetRateRule.rates[rate];
-        this.rates.push(new Rate(currentRate));
+    var rates = objectGraph.SetRateRule.rates;
+    for (var rate in rates) {
+        if (rates.hasOwnProperty(rate)) {
+            var currentRate = rates[rate];
+            this.rates.push(new Rate(currentRate));
+        }
     }
 }
 

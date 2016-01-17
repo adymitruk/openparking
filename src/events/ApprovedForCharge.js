@@ -1,4 +1,6 @@
+/*jslint node:true */
 "use strict";
+
 var uuid = require('uuid');
 
 function ApprovedForCharge(objectGraph) {
