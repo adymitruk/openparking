@@ -69,7 +69,7 @@ module.exports = {
                 version: "1.0.0",
                 previousParking: null,
                 spot: 1234,
-                startTime: "Jan 7 2016 18:10:00 PST",
+                startTime: "Jan 7 2016 15:10:00 PST",
                 durationInMinutes: 40
             }
         });
