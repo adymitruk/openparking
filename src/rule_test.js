@@ -1,6 +1,5 @@
 "use strict";
 var Rule = require('./rule.js');
-var Money = require('./money.js');
 var SetRateRule = require('./events/SetRateRule.js');
 var Park = require('./commands/Park.js')
 
@@ -31,12 +30,6 @@ var vancouverRateRule = new SetRateRule( {
 });
 
 module.exports = {
-    'Test Money' : function(test) {
-        var money = new Money(12.345);
-        test.expect(1);
-        test.ok(12.35 == money, 'got ' + money + ' instead');
-        test.done();
-    },
     'Test Parking Sunny Path' : function(test) {
         var rule = new Rule();
 
