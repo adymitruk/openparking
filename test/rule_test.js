@@ -6,7 +6,6 @@ var SetRateRule = require('../src/events/SetRateRule.js');
 var Park = require('../src/commands/Park.js');
 
 var vancouverRateRule = new SetRateRule({
-    SetRateRule: {
         lotRange: "1000-2000",
         rates: [
             {
@@ -29,7 +28,7 @@ var vancouverRateRule = new SetRateRule({
             }
         ]
     }
-});
+);
 module.exports = {
     'Test Parking Sunny Path': function (test) {
         test.expect(1);
@@ -39,15 +38,14 @@ module.exports = {
         rule.hydrate(vancouverRateRule);
 
         // WHEN: a user asks to park
-        var parkingChargeApprovedEvent = rule.execute({
-            ParkCommand: {
-                version: "1.0.0",
+        var parkingChargeApprovedEvent = rule.execute(
+            new Park({
                 previousParking: null,
                 spot: 1234,
                 startTime: "Jan 7 2016 18:10:00 PST",
                 durationInMinutes: 40
-            }
-        });
+            })
+        );
 
         // THEN: the appropriate charge is calculated
         var expectedMoneyRoundedToPennies = (40.0 / 60.0 * 2.0).toFixed(2);
@@ -56,7 +54,7 @@ module.exports = {
             "rate should be " + expectedMoneyRoundedToPennies + " but was " + actual);
         test.done();
     },
-    'Test Parking Rejected Due to restriction': function (test) {
+    'Test Parking Rejected Due to Restriction': function (test) {
         test.expect(1);
         var rule = new Rule();
 
@@ -64,18 +62,17 @@ module.exports = {
         rule.hydrate(vancouverRateRule);
 
         // WHEN: a user asks to park
-        var parkingChargeRejectedEvent = rule.execute({
-            ParkCommand: {
-                version: "1.0.0",
-                previousParking: null,
-                spot: 1234,
-                startTime: "Jan 7 2016 15:10:00 PST",
-                durationInMinutes: 40
-            }
-        });
+        var parkingChargeRejected = rule.execute(new
+            Park({
+            version: "1.0.0",
+            previousParking: null,
+            spot: 1234,
+            startTime: "Jan 7 2016 15:10:00 PST",
+            durationInMinutes: 40
+        }));
 
-        // THEN
-        test.ok(parkingChargeRejectedEvent.Reason === "Afternoon Rush Hour", "rejected reason was supposed to be 'Afternoon Rush Hour'");
+        // THEN: a rejected parking event is generated
+        test.ok(parkingChargeRejected.Reason === "Afternoon Rush Hour", "rejected reason was supposed to be 'Afternoon Rush Hour'");
         test.done();
     }
-}
+};
