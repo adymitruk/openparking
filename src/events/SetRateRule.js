@@ -11,17 +11,4 @@ function SetRateRule(sourceEvent) {
     this.restrictions = sourceEvent.restrictions;
 }
 
-//function Rate(rate) {
-//    this.name = rate.name;
-//    this.timeRange = rate.timeRange;
-//    this.ratePerHour = rate.ratePerHour;
-//    this.granularity = rate.granularity;
-//    this.limitStayInHours = rate.limitStayInHours;
-//    this.limitResetInMins = rate.limitResetInMins;
-//}
-//
-//function Restriction() {
-//
-//}
-
 module.exports = SetRateRule;
