@@ -72,7 +72,7 @@ module.exports = {
         }));
 
         // THEN: a rejected parking event is generated
-        test.ok(parkingChargeRejected.reason === "Evening Rush Hour", "rejected reason was supposed to be 'Afternoon Rush Hour'");
+        test.ok(parkingChargeRejected.reason === "Evening Rush Hour", "rejected reason was supposed to be 'Evening Rush Hour'");
         test.done();
     },
     'Test Parking Rejected Due Start Time Outside of Chargeable Hours': function (test) {
