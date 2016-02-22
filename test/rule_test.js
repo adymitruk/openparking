@@ -2,8 +2,8 @@
 "use strict";
 
 var Rule = require('../src/rule.js');
-var SetRateRule = require('../src/events/SetRateRule.js');
-var Park = require('../src/commands/Park.js');
+var SetRateRule = require('../src/events/setRateRule.js');
+var Park = require('../src/commands/park.js');
 
 var vancouverRateRule = new SetRateRule({
         lotRange: "1000-2000",
@@ -95,5 +95,25 @@ module.exports = {
         // THEN: a rejected parking event is generated
         test.ok(parkingChargeRejected.reason === "Parking Is Free Currently", "rejected reason was supposed to be 'Parking Is Free Currently'");
         test.done();
-    }
-};
+    },
+    'Test Parking Rejected Due End Time in the Middle of Restriction': function (test) {
+        test.expect(1);
+        var rule = new Rule();
+
+        // GIVEN: a parking spot is setup
+        rule.hydrate(vancouverRateRule);
+
+        // WHEN: a user asks to park
+        var parkingChargeRejected = rule.execute(new
+            Park({
+            version: "1.0.0",
+            previousParking: null,
+            spot: 1234,
+            startTime: "Jan 7 2016 14:50:00 PST",
+            durationInMinutes: 40
+        }));
+
+        // THEN: a rejected parking event is generated
+        test.ok(parkingChargeRejected.reason === "Evening Rush Hour", "rejected reason was supposed to be 'Evening Rush Hour'");
+        test.done();
+    }};
