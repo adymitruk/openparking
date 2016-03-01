@@ -1,0 +1,8 @@
+{{#if sessions.length}}
+Vehicles authorized at {{spot}}:
+{{#each sessions}}
+{{vehicle}} {{startTime}} {{durationInMinutes}}m
+{{/each}}
+{{else}}
+No vehicle authorized at {{spot}}
+{{/if}}

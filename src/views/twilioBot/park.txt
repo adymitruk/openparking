@@ -1,0 +1,6 @@
+{{#if reason}}
+Parking request rejected. Reason: {{reason}}
+{{else}}
+{{trx.description}} approved. Cost: {{trx.amount}} {{trx.currency}}. To pay:
+{{link}}
+{{/if}}

@@ -1,0 +1,8 @@
+{{#if sessions.length}}
+The vehicles authorized to park at {{spot}} are:
+{{#each sessions}}
+- {{vehicle}} from {{startTime}} for {{durationInMinutes}} mins
+{{/each}}
+{{else}}
+There is no vehicle authorized to park at {{spot}}
+{{/if}}

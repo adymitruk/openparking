@@ -3,6 +3,7 @@
 
 var ApprovedForCharge = require('./events/ApprovedForCharge');
 var ParkingChargeRejected = require('./events/ParkingChargeRejected');
+var SetRateRule = require('./events/SetRateRule');
 
 function Rule() {
     var rules = [];
@@ -20,7 +21,9 @@ function Rule() {
         return new ApprovedForCharge(amountToCharge.toFixed(2));
     };
     this.hydrate = function (event) {
-        rules.push(event);
+        if (event instanceof SetRateRule) {
+            rules.push(event);
+        }
     };
     function _restrictionForStartTime(command, rule) {
         var restrictions = rule.restrictions;

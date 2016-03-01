@@ -1,3 +1,4 @@
 .idea/
 src/npm-debug.log
 *.bak
+node_modules/

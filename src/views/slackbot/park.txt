@@ -1,0 +1,6 @@
+{{#if reason}}
+Your parking request has been rejected. Reason: {{reason}}
+{{else}}
+{{trx.description}} approved. Cost: {{trx.amount}} {{trx.currency}}. Click the following link to pay:
+{{link}}
+{{/if}}

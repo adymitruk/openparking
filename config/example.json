@@ -1,0 +1,26 @@
+{
+  "goesUrl": "tcp://127.0.0.1:12345",
+  "goesStoragePath": "/var/events",
+  "publicHostname": "dev.openparking.org",
+  "httpPort": 443,
+  "useHttps": true,
+  "certFile": "/etc/certs/cert.pem",
+  "keyFile": "/etc/certs/key.pem",
+  "paymentId": "a89b51e5-788d-43e7-b9e7-8a13192de136",
+  "ruleId": "0982b25d-c5ce-4825-bc2a-0bf05b468c5e",
+  "parkingId": "29a20044-8a0a-4b0a-9204-f8d7aaae940d",
+  "paymentProviders": {
+    "Stripe": [
+      "sk_test_",
+      "pk_test_"
+    ]
+  },
+  "uiProviders": {
+    "Slack": ["slack-key-here"],
+    "Twilio": [
+      "Twilio-SID-here",
+      "Twilio-Auth-here",
+      "+15555555555"
+    ]
+  }
+}

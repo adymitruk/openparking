@@ -1,0 +1,27 @@
+{
+  "goesUrl": "tcp://127.0.0.1:12345",
+  "goesStoragePath": "C:/tmp/parkingevents",
+  "publicHostname": "localhost",
+  "httpPort": 8080,
+  "useHttps": false,
+  "certFile": "C:/tmp/cert.pem",
+  "keyFile": "c:/tmp/key.pem",
+  "paymentId": "a89b51e5-788d-43e7-b9e7-8a13192de136",
+  "ruleId": "0982b25d-c5ce-4825-bc2a-0bf05b468c5e",
+  "parkingId": "29a20044-8a0a-4b0a-9204-f8d7aaae940d",
+  "paymentProviders": {
+    "stripe": [
+      "sk_test_RqkXlT8Tjb0a2xkbg3SbagRn",
+      "pk_test_qwSj6KHOQrLOkyimLuNXNfxX"
+    ]
+  },
+  "uiProviders": {
+    "web": [],
+    "slack": ["xoxb-21532095908-UVnTDDifbvC25Hh7g9p8tWZR"],
+    "twilio": [
+      "AC5b275ef3afe7ba7ba6b8ba79a9e9c707",
+      "bdd428ca4162d300a5ce896709c3268a",
+      "+17786541045"
+    ]
+  }
+}

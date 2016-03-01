@@ -1,0 +1,20 @@
+<h1>City of Burnaby (Open)Parking</h1>
+<form method="post" action="/web/park">
+    <label for="licensePlate">License Plate</label>
+    <input type="text" name="licensePlate" id="licensePlate" />
+    <br/>
+    <label for="duration">Duration</label>
+    <input type="text" name="duration" id="duration" />
+    <select id="durationUnit" name="durationUnit">
+        <option value="m">Minutes</option>
+        <option value="h">Hours</option>
+    </select>
+    <br/>
+    <label for="spot">Spot</label>
+    <input type="text" name="spot" id="spot" />
+    <br/>
+    <input type="submit" value="Park" />
+</form>
+<script type="text/javascript">
+    document.getElementById('licensePlate').focus();
+</script>

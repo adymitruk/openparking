@@ -2,7 +2,16 @@
   "name": "application-name",
   "version": "0.0.1",
   "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.5",
+    "nodeunit": "latest",
+    "slack-client": "^2.0.2",
+    "stripe": "^4.4.0",
+    "twilio": "^2.9.0",
     "uuid": "latest",
-    "nodeunit": "latest"
+    "when": "^3.7.7",
+    "zmq": "latest"
   }
 }
